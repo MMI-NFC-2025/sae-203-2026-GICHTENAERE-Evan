@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/hero.astro';
 import CardProg from '../components/cardprog.astro';
 import { allArtistesSortedByDateWithScene } from '../../backend/backend.mjs';
+import Button from '../components/button.astro';
 
 const pbUrl = 'http://127.0.0.1:8090';
 const artistes = await allArtistesSortedByDateWithScene();
@@ -38,4 +39,9 @@ for (const artiste of artistes) {
         </div>
       </section>
     ))}
+    <div class="flex justify-center mt-8">
+      <Button href="/billeterie" text="Télécharger le programme en pdf" />
+      <br>
+    </div>
+
 </Layout>
