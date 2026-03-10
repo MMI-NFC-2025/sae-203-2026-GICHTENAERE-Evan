@@ -1,1 +1,4 @@
 @import "tailwindcss";
+@theme {
+    --fontinder : 'Inder', sans-serif;
+}
