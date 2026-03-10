@@ -8,6 +8,14 @@ export async function allArtistesSortedByDate() {
   });
   return records;
 }
+
+export async function allArtistesSortedByDateWithScene() {
+  const records = await pb.collection('artiste').getFullList({
+    sort: 'date_representation',
+    expand: 'scene',
+  });
+  return records;
+}
 // au dessus c'est la liste des artistes triés par date, on peut les afficher dans le frontend en utilisant cette fonction.
 //fonctionne en bas 
 export async function allScenesSorted() {

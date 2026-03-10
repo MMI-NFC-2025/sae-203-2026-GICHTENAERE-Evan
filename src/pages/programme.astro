@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/hero.astro';
+import CardProg from '../components/cardprog.astro';
+import { allArtistesSortedByDateWithScene } from '../../backend/backend.mjs';
+
+const pbUrl = 'http://127.0.0.1:8090';
+const artistes = await allArtistesSortedByDateWithScene();
+
+// Grouper les artistes par date (jour + mois)
+const grouped: Record<string, typeof artistes> = {};
+for (const artiste of artistes) {
+  const date = new Date(artiste.date_representation);
+  const key = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+  if (!grouped[key]) grouped[key] = [];
+  grouped[key].push(artiste);
+}
+--- 
+
+<Layout>
+    <Hero title="Les rives du territoire" subTitle="Programme" />
+    <br />
+    <p class="font-[Poppins,sans-serif] px-[15px]">Les Rives du Territoire propose une programmation rythmée sur quatre jours intenses (20-23 décembre 2026), avec des concerts à horaires fixes pour une expérience fluide : ouverture à 17h, puis 18h30, 20h et clôture à 21h30. Ce format progressif permet un build-up naturel, mêlant hip-hop, électro et pop indé en plein air aux Berges de la Savoureuse. Consultez la grille jour par jour pour vibrer au rythme du territoire !</p>
+
+    {Object.entries(grouped).map(([date, artistes]) => (
+      <section class="px-[15px] mt-8">
+        <h2 class="text-3xl font-normal font-inder mb-4 capitalize">{date}</h2>
+        <div class="flex flex-col gap-4">
+          {artistes.map((artiste: any) => (
+            <CardProg
+              nom={artiste.nom_artiste}
+              heure={artiste.heure}
+              scene={artiste.expand?.scene?.nom_scene ?? ''}
+              type={artiste.type_programme}
+              imageUrl={`${pbUrl}/api/files/artiste/${artiste.id}/${artiste.photo_artiste}`}
+            />
+          ))}
+        </div>
+      </section>
+    ))}
+</Layout>

@@ -11,10 +11,11 @@
 @layer base {
   body {
     font-family: 'Poppins', sans-serif;
+    
     @apply text-base leading-normal;
   }
   h1 {
-    @apply text-4xl font-mono leading-tight lg:text-6xl;
+    @apply text-4xl font-normal leading-tight lg:text-6xl;
   }
   h2 {
     @apply text-2xl font-mono leading-tight lg:text-4xl;
