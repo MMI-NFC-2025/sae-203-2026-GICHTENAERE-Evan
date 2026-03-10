@@ -1,0 +1,37 @@
+---
+import gradientHero from '../assets/image/gradient_hero.png';
+import imageHero from '../assets/image/image_hero.avif';
+
+const { title, subTitle } = Astro.props;
+---
+
+<!-- Hero : photo complète visible, gradient par-dessus, textes au premier plan -->
+<section class="relative w-full mt-[72px]">
+
+  <!-- 1. Photo de fond — complète, non rognée -->
+  <img
+    src={imageHero.src}
+    alt=""
+    class="w-full h-auto block"
+    aria-hidden="true"
+  />
+
+  <!-- 2. Gradient par-dessus la photo -->
+  <img
+    src={gradientHero.src}
+    alt=""
+    class="absolute inset-0 w-full h-full object-cover"
+    aria-hidden="true"
+  />
+
+  <!-- 3. Textes au premier plan -->
+  <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white px-6">
+    <h1 class="text-[40px] font-bold leading-tight [-webkit-text-stroke:3px_black]">{title}</h1>
+  </div>
+
+  <!-- h2 positionné à 25px du bas du hero -->
+  {subTitle && (
+    <h2 class="absolute bottom-[25px] left-0 right-0 z-10 text-center text-white font-sans text-sm font-light uppercase lg:text-lg">{subTitle}</h2>
+  )}
+
+</section>

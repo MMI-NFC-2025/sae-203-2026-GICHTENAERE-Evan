@@ -1,0 +1,54 @@
+---
+import CardMain from './card-main.astro';
+import ArrowLeft from '../assets/Button_arr_left.svg';
+import ArrowRight from '../assets/Button_arr_right.svg';
+
+const { artistes } = Astro.props;
+const pbUrl = 'http://127.0.0.1:8090';
+---
+
+<section class="py-8 px-6">
+  <h2 class="text-2xl font-bold font-inder mb-6">Artistes présents au festival</h2>
+
+  <div class="relative">
+    <!-- Conteneur scrollable -->
+    <div
+      id="carousel-track"
+      class="flex gap-6 overflow-x-hidden scroll-smooth"
+    >
+      {artistes.map((artiste: any) => (
+        <CardMain
+          nom={artiste.nom_artiste}
+          description={artiste.description_artiste}
+          imageUrl={`${pbUrl}/api/files/artiste/${artiste.id}/${artiste.photo_artiste}`}
+        />
+      ))}
+    </div>
+
+    <!-- Boutons de navigation -->
+    <div class="flex justify-center gap-6 mt-6">
+      <button id="carousel-prev" aria-label="Précédent">
+        <ArrowLeft class="w-12 h-12" />
+      </button>
+      <button id="carousel-next" aria-label="Suivant">
+        <ArrowRight class="w-12 h-12" />
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector('#carousel-track') as HTMLElement;
+  const prevBtn = document.querySelector('#carousel-prev');
+  const nextBtn = document.querySelector('#carousel-next');
+
+  const scrollAmount = 300;
+
+  prevBtn?.addEventListener('click', () => {
+    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+</script>

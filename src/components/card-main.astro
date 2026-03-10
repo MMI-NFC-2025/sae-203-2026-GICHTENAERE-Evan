@@ -1,0 +1,20 @@
+---
+const { nom, description, imageUrl } = Astro.props;
+---
+
+<div class="flex-shrink-0 w-[283px] flex flex-col items-center gap-[-10px]">
+  <!-- Box image -->
+  <div class="w-[283px] h-[200px] rounded-[15px] border border-[#058CD8] overflow-hidden">
+    <img
+      src={imageUrl}
+      alt={nom}
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <!-- Box nom + description (chevauche légèrement l'image) -->
+  <div class="w-[263px] rounded-[15px] border border-[#058CD8] bg-white -mt-4 relative z-10 p-4 text-center">
+    <h3 class="text-lg font-bold font-inder mb-2">{nom}</h3>
+    <p class="text-sm font-poppins text-gray-700">{description}</p>
+  </div>
+</div>
