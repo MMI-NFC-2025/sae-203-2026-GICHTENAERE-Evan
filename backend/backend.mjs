@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase';
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new PocketBase('https://sae203.lesrivesduterritoire.evangichtenaere.fr:443');
 
 //celui du bas foncitonne bien
 export async function allArtistesSortedByDate() {
@@ -55,7 +55,7 @@ export async function getSceneById(id) {
 //juste fonctionne
 export async function artistesBySceneId(Id) {
   const records = await pb.collection('artiste').getFullList({
-    filter: `scene.id="${Id}"`,
+    filter: `scene.id="${Id}"`, 
     sort: 'date_representation',
   });
   return records;
