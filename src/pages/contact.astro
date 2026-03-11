@@ -7,22 +7,22 @@ import Button from '../components/button.astro';
 <Layout>
   <Hero title="Les rives du territoire" subTitle="Contact" />
 
-  <div class="px-[15px] mt-5 lg:max-w-2xl lg:mx-auto lg:w-full">
+  <div class="px-4 mt-5 lg:max-w-2xl lg:mx-auto lg:w-full">
 
     <h2 class="font-inder text-2xl font-normal mb-5">Formulaire de contact</h2>
 
-    <form>
+    <form id="contact-form" novalidate>
       <!-- Nom -->
       <label class="font-poppins font-bold text-sm block mb-1">
         Nom<span class="text-red-600">*</span>
       </label>
       <div class="flex gap-4 mb-1">
         <div class="flex-1">
-          <input type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+          <input id="prenom" name="prenom" type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
           <span class="font-poppins text-xs text-gray-500">Prénom</span>
         </div>
         <div class="flex-1">
-          <input type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+          <input id="nom" name="nom" type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
           <span class="font-poppins text-xs text-gray-500">Nom</span>
         </div>
       </div>
@@ -31,23 +31,29 @@ import Button from '../components/button.astro';
       <label class="font-poppins font-bold text-sm block mt-4 mb-1">
         E-mail<span class="text-red-600">*</span>
       </label>
-      <input type="email" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+      <input id="email" name="email" type="email" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
 
       <!-- Sujet -->
       <label class="font-poppins font-bold text-sm block mt-4 mb-1">
         Sujet<span class="text-red-600">*</span>
       </label>
-      <input type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+      <input id="sujet" name="sujet" type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
 
       <!-- Message -->
       <label class="font-poppins font-bold text-sm block mt-4 mb-1">
         Message<span class="text-red-600">*</span>
       </label>
-      <textarea required rows="5" class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm resize-vertical"></textarea>
+      <textarea id="message" name="message" required rows="5" class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm resize-vertical"></textarea>
+
+      <!-- Message de retour -->
+      <p id="form-success" class="hidden mt-4 text-green-600 font-poppins text-sm text-center">Votre message a bien été envoyé !</p>
+      <p id="form-error" class="hidden mt-4 text-red-600 font-poppins text-sm text-center">Une erreur est survenue. Veuillez réessayer.</p>
 
       <!-- Bouton Envoyer -->
       <div class="mt-5 flex justify-center">
-        <Button href="#" text="Envoyer" />
+        <button type="submit" class="inline-block bg-[#058CD8] text-white uppercase tracking-widest px-10 py-4 rounded-[15px] border-2 border-black font-inder text-sm">
+          Envoyer
+        </button>
       </div>
     </form>
 
@@ -61,4 +67,42 @@ import Button from '../components/button.astro';
     </div>
 
   </div>
+
+  <script>
+    import PocketBase from 'pocketbase';
+
+    const pb = new PocketBase('http://127.0.0.1:8090');
+
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const successMsg = document.getElementById('form-success')!;
+    const errorMsg = document.getElementById('form-error')!;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const data = {
+        prenom: (document.getElementById('prenom') as HTMLInputElement).value.trim(),
+        nom: (document.getElementById('nom') as HTMLInputElement).value.trim(),
+        email: (document.getElementById('email') as HTMLInputElement).value.trim(),
+        sujet: (document.getElementById('sujet') as HTMLInputElement).value.trim(),
+        message: (document.getElementById('message') as HTMLTextAreaElement).value.trim(),
+      };
+
+      try {
+        const record = await pb.collection('utilisateur').create(data);
+        console.log('Record créé :', record);
+        successMsg.classList.remove('hidden');
+        errorMsg.classList.add('hidden');
+        form.reset();
+      } catch (err) {
+        console.error('PocketBase error:', err);
+        errorMsg.classList.remove('hidden');
+        successMsg.classList.add('hidden');
+      }
+    });
+  </script>
 </Layout>
