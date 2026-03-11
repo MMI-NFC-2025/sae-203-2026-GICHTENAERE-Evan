@@ -1,0 +1,93 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/hero.astro';
+import Button from '../../components/button.astro';
+import { allArtistesSortedByDateWithScene } from '../../../backend/backend.mjs';
+
+function slugify(str: string): string {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+export async function getStaticPaths() {
+  const artistes = await allArtistesSortedByDateWithScene();
+  return artistes.map((artiste: any) => ({
+    params: { nom: slugify(artiste.nom_artiste) },
+    props: { artiste },
+  }));
+}
+
+let artiste = Astro.props.artiste;
+if (!artiste) {
+  const allArtistes = await allArtistesSortedByDateWithScene();
+  artiste = allArtistes.find((a: any) => slugify(a.nom_artiste) === Astro.params.nom);
+}
+const pbUrl = 'http://127.0.0.1:8090';
+const photoUrl = `${pbUrl}/api/files/artiste/${artiste.id}/${artiste.photo_artiste}`;
+const sceneName = artiste.expand?.scene?.nom_scene ?? 'Scène inconnue';
+
+const dateObj = new Date(artiste.date_representation);
+const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const jourPassage = `${dateObj.getDate()} ${months[dateObj.getMonth()]}`;
+
+const galerieImages: string[] = artiste.galerie_artiste ?? [];
+---
+
+<Layout>
+  <Hero title="Les rives du territoire" subTitle={artiste.nom_artiste} />
+
+  <div class="px-4 mt-5 lg:max-w-4xl lg:mx-auto lg:w-full">
+
+    <!-- Photo + infos : 1 col mobile, 2 col desktop -->
+    <div class="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-start">
+
+      <!-- Photo de l'artiste -->
+      <div class="w-full rounded-2xl overflow-hidden border border-[#058CD8]">
+        <img
+          src={photoUrl}
+          alt={artiste.nom_artiste}
+          class="w-full h-auto object-cover"
+        />
+      </div>
+
+      <!-- Colonne droite desktop : description + horaires -->
+      <div>
+        <!-- Description -->
+        <p class="font-poppins text-sm leading-relaxed mt-5 italic lg:mt-0">{artiste.description_artiste}</p>
+
+        <!-- Horaires -->
+        <h2 class="font-inder mt-5">Horaires</h2>
+
+        <div class="mt-5 flex flex-col gap-2 font-poppins">
+          <p><span class="font-bold">Jour de passage :</span> {jourPassage}</p>
+          <p><span class="font-bold">Heure de passage :</span> {artiste.heure}</p>
+          <p><span class="font-bold">Scène utilisée :</span> {sceneName}</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Galerie (pleine largeur, en dessous de la grille) -->
+    {galerieImages.length > 0 && (
+      <h2 class="font-inder mt-5">Galerie</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-5">
+        {galerieImages.map((img: string) => (
+          <div class="rounded-xl overflow-hidden">
+            <img
+              src={`${pbUrl}/api/files/artiste/${artiste.id}/${img}`}
+              alt={`${artiste.nom_artiste} galerie`}
+              loading="lazy"
+              class="w-full h-40 object-cover"
+            />
+          </div>
+        ))}
+      </div>
+    )}
+
+    <div class="flex justify-center mt-5">
+      <Button href="/artistes" text="Retour" />
+    </div>
+
+    <div class="mb-5"></div>
+
+  </div>
+</Layout>

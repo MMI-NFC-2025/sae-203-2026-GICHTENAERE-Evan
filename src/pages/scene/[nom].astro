@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/hero.astro';
+import Button from '../../components/button.astro';
+import { allScenesSorted, artistesBySceneId } from '../../../backend/backend.mjs';
+
+function slugify(str: string): string {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+export async function getStaticPaths() {
+  const scenes = await allScenesSorted();
+  return scenes.map((scene: any) => ({
+    params: { nom: slugify(scene.nom_scene) },
+    props: { scene },
+  }));
+}
+
+let scene = Astro.props.scene;
+if (!scene) {
+  const allScenes = await allScenesSorted();
+  scene = allScenes.find((s: any) => slugify(s.nom_scene) === Astro.params.nom);
+}
+
+const pbUrl = 'http://127.0.0.1:8090';
+const photoUrl = `${pbUrl}/api/files/scene/${scene.id}/${scene.photo}`;
+
+const artistes = await artistesBySceneId(scene.id);
+---
+
+<Layout>
+  <Hero title="Les rives du territoire" subTitle={scene.nom_scene} />
+
+  <div class="px-4 mt-5 lg:max-w-4xl lg:mx-auto lg:w-full">
+
+    <!-- Photo + contenu : 1 col mobile, 2 col desktop -->
+    <div class="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-start">
+
+    <!-- Photo de la scène -->
+    <img
+      src={photoUrl}
+      alt={scene.nom_scene}
+      loading="lazy"
+      class="w-full rounded-2xl border border-[#058CD8] object-cover block"
+    />
+
+    <!-- Colonne droite : description, capacité, artistes -->
+    <div>
+
+    <!-- Description -->
+    <p class="font-poppins text-sm leading-relaxed mt-5">{scene.description}</p>
+
+    <!-- Capacité -->
+    <h2 class="font-inder text-xl font-normal mt-5">La scène à une capacité de {scene.capacite} personnes</h2>
+
+    <!-- Liste des artistes sur la scène -->
+    <h2 class="font-inder text-xl font-normal mt-5 mb-3">Liste des artistes sur la scène</h2>
+
+    <ul class="list-disc list-inside font-poppins text-sm mb-5">
+      {artistes.map((artiste: any) => (
+        <li>
+          <a href={`/artiste/${slugify(artiste.nom_artiste)}`} class="text-[#058CD8] underline hover:opacity-80">
+            {artiste.nom_artiste}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    </div>
+    </div>
+
+    <!-- Bouton retour -->
+    <div class="mt-5 mb-10 flex justify-center">
+      <Button href="/scenes" text="Retour" />
+    </div>
+
+  </div>
+</Layout>

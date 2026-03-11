@@ -38,6 +38,13 @@ export async function getArtisteById(id) {
   const record = await pb.collection('artiste').getOne(id);
   return record;
 }
+
+export async function getArtisteByIdWithScene(id) {
+  const record = await pb.collection('artiste').getOne(id, {
+    expand: 'scene',
+  });
+  return record;
+}
 //fonctionne aussi en bas
 export async function getSceneById(id) {
   const record = await pb.collection('scene').getOne(id);

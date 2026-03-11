@@ -3,8 +3,8 @@ import Logo from '../assets/icon/svg_logo_les_rives_territoire.svg';
 import Cross from '../assets/icon/cross.svg';
 ---
 
-<!-- Header : toujours au-dessus de la nav overlay (z-50 > z-40) -->
-<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-[#01DCF2]">
+<!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-[#01DCF2] lg:py-0">
   <a href="/" aria-label="Accueil" class="flex items-center">
     <Logo />
   </a>
@@ -14,20 +14,20 @@ import Cross from '../assets/icon/cross.svg';
     aria-label="Ouvrir le menu"
     aria-controls="menu"
     aria-expanded="false"
-    class="flex h-6 w-8 flex-col justify-between [&>span]:block [&>span]:h-0.5 [&>span]:w-full [&>span]:bg-black">
+    class="flex h-6 w-8 flex-col justify-between [&>span]:block [&>span]:h-0.5 [&>span]:w-full [&>span]:bg-black lg:hidden">
     <span class="text-black-extrabold text-3xl"></span>
     <span class="text-black-extrabold text-3xl"></span>
     <span class="text-black-extrabold text-3xl"></span>
   </button>
 
-
-  <!-- Overlay menu : transition opacity + translateY -->
+  <!-- Navigation -->
   <nav
     id="menu"
-    class="fixed inset-0 z-40 flex flex-col bg-[#010BBF] text-white opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 ease-in-out overflow-y-auto"
+    class="fixed inset-0 z-40 flex flex-col bg-[#010BBF] text-white opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 ease-in-out overflow-y-auto
+           lg:relative lg:inset-auto lg:flex lg:flex-row lg:items-center lg:bg-transparent lg:text-black lg:opacity-100 lg:translate-y-0 lg:pointer-events-auto lg:overflow-visible"
   >
-    <!-- Ligne haute : logo à gauche, croix à droite — même position que le header -->
-    <div class="flex items-center justify-between px-6 py-4">
+    <!-- Ligne haute mobile : logo + croix -->
+    <div class="flex items-center justify-between px-6 py-4 lg:hidden">
       <Logo />
       <button id="menu-close" aria-label="Fermer le menu">
         <Cross class="h-8 w-8" />
@@ -35,13 +35,13 @@ import Cross from '../assets/icon/cross.svg';
     </div>
 
     <!-- Liens -->
-    <ul class="flex flex-col text-2xl font-inder">
-      <li><a class="block px-6 py-[53px] text-[34px]" href="/apropos">À propos</a></li>
-      <li><a class="block px-6 py-[53px] text-[34px]" href="/programme">Programme</a></li>
-      <li><a class="block px-6 py-[53px] text-[34px]" href="/artistes">Artistes</a></li>
-      <li><a class="block px-6 py-[53px] text-[34px]" href="/scenes">Scènes</a></li>
-      <li><a class="block px-6 py-[53px] text-[34px]" href="/informations">Informations</a></li>
-      <li><a class="block px-6 py-[53px] text-[34px]" href="/contact">Contact</a></li>
+    <ul class="flex flex-col text-2xl font-inder lg:flex-row lg:items-center lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:m-0">
+      <li><a class="block px-6 py-[53px] text-[34px] lg:px-4 lg:py-6 lg:text-sm" href="/apropos">À propos</a></li>
+      <li><a class="block px-6 py-[53px] text-[34px] lg:px-4 lg:py-6 lg:text-sm" href="/programme">Programme</a></li>
+      <li><a class="block px-6 py-[53px] text-[34px] lg:px-4 lg:py-6 lg:text-sm" href="/artistes">Artistes</a></li>
+      <li><a class="block px-6 py-[53px] text-[34px] lg:px-4 lg:py-6 lg:text-sm" href="/scenes">Scènes</a></li>
+      <li><a class="block px-6 py-[53px] text-[34px] lg:px-4 lg:py-6 lg:text-sm" href="/informations">Informations</a></li>
+      <li><a class="block px-6 py-[53px] text-[34px] lg:px-4 lg:py-6 lg:text-sm" href="/contact">Contact</a></li>
     </ul>
   </nav>
 </header>

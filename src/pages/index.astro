@@ -11,24 +11,27 @@ const artistes = await allArtistes();
 
 <Layout>
   <Hero title="Les rives du territoire" subTitle="Festival de musique" />
-  <br>
-  <h2 class="font-inder px-[15px]">Du 20 au 23 Décembre 2026</h2>
-  <br />
-  <p class="font-[Poppins,sans-serif] px-[15px]">Les Rives du Territoire est un festival de musiques actuelles et de culture urbaine qui met à l’honneur le hip‑hop, l’électro et la pop indépendante. Conçu comme un rendez‑vous hivernal en plein air, il valorise les talents émergents locaux tout en créant une véritable ambiance de quartier. Le festival propose une fusion entre concerts, street‑art et initiatives autour de l’écologie urbaine, transformant l’espace public en laboratoire créatif où se rencontrent musique, arts visuels et engagements citoyens.</p>
-  <br />
-  <div class="flex justify-center">
-    <Button href="/billeterie" text="Accéder à la billeterie" />
-  </div>
+
+  <!-- Section intro + billetterie -->
+  <section class="px-4 mt-5 lg:grid lg:grid-cols-2 lg:gap-8 lg:max-w-5xl lg:mx-auto lg:items-center lg:mt-10">
+    <div>
+      <h2 class="font-inder whitespace-nowrap">Du 20 au 23 Décembre 2026</h2>
+      <p class="font-poppins mt-5">Les Rives du Territoire est un festival de musiques actuelles et de culture urbaine qui met à l'honneur le hip‑hop, l'électro et la pop indépendante. Conçu comme un rendez‑vous hivernal en plein air, il valorise les talents émergents locaux tout en créant une véritable ambiance de quartier. Le festival propose une fusion entre concerts, street‑art et initiatives autour de l'écologie urbaine, transformant l'espace public en laboratoire créatif où se rencontrent musique, arts visuels et engagements citoyens.</p>
+    </div>
+    <div class="flex justify-center mt-5 lg:mt-0">
+      <Button href="/billeterie" text="Accéder à la billeterie" />
+    </div>
+  </section>
 
   <!-- Carousel des artistes -->
   <Carousel artistes={artistes} />
   <div class="flex justify-center">
     <Button href="/artistes" text="Voir tous les artistes" />
   </div>
-  <br>
-  
-  <h2 class="font-inder px-[15px]">Expérience proposée</h2> 
-  <br />
-  <p class="font-[Poppins,sans-serif] px-[15px]">Les Rives du Territoire offrent une expérience où musique, culture urbaine et créativité locale se rencontrent en plein air, en plein hiver. Le festival met en avant les talents émergents, l’énergie du rap et de l’électro, et l’ouverture pop qui réunit tous les publics. </p>
-  <br />
+
+  <!-- Section expérience -->
+  <section class="px-4 mt-5 mb-10 lg:max-w-5xl lg:mx-auto lg:mt-10">
+    <h2 class="font-inder">Expérience proposée</h2>
+    <p class="font-poppins mt-5">Les Rives du Territoire offrent une expérience où musique, culture urbaine et créativité locale se rencontrent en plein air, en plein hiver. Le festival met en avant les talents émergents, l'énergie du rap et de l'électro, et l'ouverture pop qui réunit tous les publics.</p>
+  </section>
 </Layout>

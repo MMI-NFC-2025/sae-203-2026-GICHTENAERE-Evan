@@ -22,18 +22,34 @@ const faqs = [
 
 <Layout>
      <Hero title="Les rives du territoire" subTitle="Informations" /> 
-     <h2 class="font-inder px-[15px] mt-5 lg:max-w-2xl lg:mx-auto">Tarifs</h2>
-     <p class="font-[Poppins,sans-serif] px-[15px] mt-5 lg:max-w-2xl lg:mx-auto">Les Rives du Territoire propose plusieurs formules de billets pour s’adapter à tous les publics. Vous pourrez choisir entre un billet jour (accès à une journée de concerts) et un pass 4 jours pour profiter de l’ensemble du festival. Des tarifs réduits seront disponibles pour les étudiants, les moins de 18 ans et les demandeurs d’emploi, sur présentation d’un justificatif au moment du contrôle des billets.</p>
-     <div class="flex justify-center mt-5 lg:max-w-2xl lg:mx-auto">
+     <!-- Grille 3 colonnes desktop pour les sections info -->
+     <div class="px-4 mt-5 lg:grid lg:grid-cols-3 lg:gap-8 lg:max-w-5xl lg:mx-auto">
+
+       <section>
+         <h2 class="font-inder mt-0">Tarifs</h2>
+         <p class="font-poppins mt-5">Les Rives du Territoire propose plusieurs formules de billets pour s'adapter à tous les publics. Vous pourrez choisir entre un billet jour (accès à une journée de concerts) et un pass 4 jours pour profiter de l'ensemble du festival. Des tarifs réduits seront disponibles pour les étudiants, les moins de 18 ans et les demandeurs d'emploi, sur présentation d'un justificatif au moment du contrôle des billets.</p>
+       </section>
+
+       <section>
+         <h2 class="font-inder mt-0">Hébergements</h2>
+         <p class="font-poppins mt-5">Pour prolonger l'expérience du festival, de nombreux hébergements sont accessibles autour de Belfort : hôtels en centre-ville, chambres d'hôtes, campings et locations de vacances. Que vous soyez plutôt confort, économique ou proche de la nature, vous trouverez une solution adaptée à votre budget et à la durée de votre séjour. Il est conseillé de réserver en avance, les disponibilités pouvant être limitées pendant la période du festival.</p>
+       </section>
+
+       <section>
+         <h2 class="font-inder mt-0">Transport</h2>
+         <p class="font-poppins mt-5">Le festival est facilement accessible en train, en bus, en voiture ou en covoiturage. Depuis la gare de Belfort, des lignes de bus permettent de rejoindre rapidement le centre-ville et les Berges de la Savoureuse. En voiture, des parkings et aires de covoiturage sont situés aux abords de la ville, il est recommandé de privilégier le partage de trajets et les transports en commun pour réduire l'impact environnemental et fluidifier l'accès au site.</p>
+       </section>
+
+     </div>
+
+     <!-- Bouton centré sous les 3 rubriques -->
+     <div class="flex justify-center mt-8 lg:max-w-5xl lg:mx-auto">
        <Button text="Accéder à la billetterie" />
      </div>
-     <h2 class="font-inder px-[15px] mt-5 lg:max-w-2xl lg:mx-auto">Hébergements</h2>
-     <p class="font-[Poppins,sans-serif] px-[15px] mt-5 lg:max-w-2xl lg:mx-auto">Pour prolonger l’expérience du festival, de nombreux hébergements sont accessibles autour de Belfort : hôtels en centre-ville, chambres d’hôtes, campings et locations de vacances. Que vous soyez plutôt confort, économique ou proche de la nature, vous trouverez une solution adaptée à votre budget et à la durée de votre séjour. Il est conseillé de réserver en avance, les disponibilités pouvant être limitées pendant la période du festival.</p>
-     <h2 class="font-inder px-[15px] mt-5 lg:max-w-2xl lg:mx-auto">Transport</h2>
-     <p class="font-[Poppins,sans-serif] px-[15px] mt-5 lg:max-w-2xl lg:mx-auto">Le festival est facilement accessible en train, en bus, en voiture ou en covoiturage. Depuis la gare de Belfort, des lignes de bus permettent de rejoindre rapidement le centre-ville et les Berges de la Savoureuse. En voiture, des parkings et aires de covoiturage sont situés aux abords de la ville, il est recommandé de privilégier le partage de trajets et les transports en commun pour réduire l’impact environnemental et fluidifier l’accès au site.</p>
-    <h2 class="font-inder px-[15px] mt-5 lg:max-w-2xl lg:mx-auto">FAQ</h2>
 
-    <div class="px-[15px] mt-5 flex flex-col gap-[1.25rem] max-w-2xl mx-auto w-full">
+    <h2 class="font-inder px-4 mt-8 lg:max-w-2xl lg:mx-auto">FAQ</h2>
+
+    <div class="px-4 mt-5 flex flex-col gap-5 max-w-2xl mx-auto w-full">
       {faqs.map((faq, i) => (
         <div class="faq-item">
           <button

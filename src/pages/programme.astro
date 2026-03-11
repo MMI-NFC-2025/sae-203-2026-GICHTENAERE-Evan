@@ -8,6 +8,10 @@ import Button from '../components/button.astro';
 const pbUrl = 'http://127.0.0.1:8090';
 const artistes = await allArtistesSortedByDateWithScene();
 
+function slugify(str: string): string {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
 // Grouper les artistes par date (jour + mois)
 const grouped: Record<string, typeof artistes> = {};
 for (const artiste of artistes) {
@@ -21,12 +25,12 @@ for (const artiste of artistes) {
 <Layout>
     <Hero title="Les rives du territoire" subTitle="Programme" />
 
-    <p class="font-[Poppins,sans-serif] px-[15px] mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire propose une programmation rythmée sur quatre jours intenses (20-23 décembre 2026), avec des concerts à horaires fixes pour une expérience fluide : ouverture à 17h, puis 18h30, 20h et clôture à 21h30. Ce format progressif permet un build-up naturel, mêlant hip-hop, électro et pop indé en plein air aux Berges de la Savoureuse. Consultez la grille jour par jour pour vibrer au rythme du territoire !</p>
+    <p class="font-poppins px-4 mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire propose une programmation rythmée sur quatre jours intenses (20-23 décembre 2026), avec des concerts à horaires fixes pour une expérience fluide : ouverture à 17h, puis 18h30, 20h et clôture à 21h30. Ce format progressif permet un build-up naturel, mêlant hip-hop, électro et pop indé en plein air aux Berges de la Savoureuse. Consultez la grille jour par jour pour vibrer au rythme du territoire !</p>
 
     {Object.entries(grouped).map(([date, artistes]) => (
-      <section class="px-[15px] mt-8 lg:max-w-6xl lg:mx-auto">
+      <section class="px-4 mt-8 lg:max-w-6xl lg:mx-auto">
         <h2 class="text-3xl font-normal font-inder mb-4 capitalize">{date}</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {artistes.map((artiste: any) => (
             <CardProg
               nom={artiste.nom_artiste}
@@ -34,6 +38,7 @@ for (const artiste of artistes) {
               scene={artiste.expand?.scene?.nom_scene ?? ''}
               type={artiste.type_programme}
               imageUrl={`${pbUrl}/api/files/artiste/${artiste.id}/${artiste.photo_artiste}`}
+              href={`/artiste/${slugify(artiste.nom_artiste)}`}
             />
           ))}
         </div>

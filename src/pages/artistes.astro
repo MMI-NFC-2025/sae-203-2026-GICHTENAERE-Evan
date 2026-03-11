@@ -12,27 +12,100 @@ function formatDate(dateStr: string): string {
   const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   return `${day} ${months[date.getMonth()]}`;
 }
+
+function slugify(str: string): string {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+// Valeurs uniques pour les filtres
+const genres = [...new Set(artistes.map((a: any) => a.genre_musical).filter(Boolean))] as string[];
+const jours = [...new Set(artistes.map((a: any) => formatDate(a.date_representation)).filter(Boolean))] as string[];
+const scenes = [...new Set(artistes.map((a: any) => a.expand?.scene?.nom_scene).filter(Boolean))] as string[];
 ---
 
 <Layout>
     <Hero title="Les rives du territoire" subTitle="Artistes" />
-    <p class="font-[Poppins,sans-serif] px-[15px] mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire est un festival de musiques actuelles et de culture urbaine qui met à l'honneur le hip‑hop, l'électro et la pop indépendante. Conçu comme un rendez‑vous hivernal en plein air, il valorise les talents émergents locaux tout en créant une véritable ambiance de quartier. Le festival propose une fusion entre concerts, street‑art et initiatives autour de l'écologie urbaine, transformant l'espace public en laboratoire créatif où se rencontrent musique, arts visuels et engagements citoyens.</p>
+    <p class="font-poppins px-4 mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire est un festival de musiques actuelles et de culture urbaine qui met à l'honneur le hip‑hop, l'électro et la pop indépendante. Conçu comme un rendez‑vous hivernal en plein air, il valorise les talents émergents locaux tout en créant une véritable ambiance de quartier. Le festival propose une fusion entre concerts, street‑art et initiatives autour de l'écologie urbaine, transformant l'espace public en laboratoire créatif où se rencontrent musique, arts visuels et engagements citoyens.</p>
 
   <section class="pb-12">
-    <h1 class="text-4xl font-normal font-inder px-[15px] mt-5 lg:max-w-4xl lg:mx-auto">Artistes présents</h1>
+    <h1 class="text-4xl font-normal font-inder px-4 mt-5 lg:max-w-6xl lg:mx-auto">Artistes présents</h1>
 
-    <!-- Grille d'artistes : 1 col mobile, 2 col md, 3 col lg -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-6 mt-5 lg:max-w-6xl lg:mx-auto">
+    <!-- Filtres -->
+    <div class="px-4 mt-5 lg:max-w-6xl lg:mx-auto flex flex-col gap-4 lg:flex-row lg:flex-wrap lg:gap-6">
+
+      <!-- Filtre Genre — select mobile, pills desktop -->
+      <div class="flex flex-col gap-2">
+        <span class="font-poppins text-xs font-bold uppercase tracking-wide text-gray-500">Genre</span>
+        <!-- Mobile : select -->
+        <select data-select="genre" class="lg:hidden font-poppins text-sm border border-[#010BBF] rounded-full px-4 py-2 text-[#010BBF] bg-white focus:outline-none">
+          <option value="">Tous</option>
+          {genres.map((g) => <option value={g}>{g}</option>)}
+        </select>
+        <!-- Desktop : pills -->
+        <div class="hidden lg:flex flex-wrap gap-2">
+          <button data-filter="genre" data-value="" class="filter-btn rounded-full px-3.5 py-1 text-xs font-poppins border border-[#010BBF] bg-[#010BBF] text-white transition-all">Tous</button>
+          {genres.map((g) => (
+            <button data-filter="genre" data-value={g} class="filter-btn rounded-full px-3.5 py-1 text-xs font-poppins border border-[#010BBF] text-[#010BBF] bg-white hover:bg-[#010BBF] hover:text-white transition-all">{g}</button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Filtre Jour — select mobile, pills desktop -->
+      <div class="flex flex-col gap-2">
+        <span class="font-poppins text-xs font-bold uppercase tracking-wide text-gray-500">Jour</span>
+        <!-- Mobile : select -->
+        <select data-select="jour" class="lg:hidden font-poppins text-sm border border-[#01DCF2] rounded-full px-4 py-2 text-[#01DCF2] bg-white focus:outline-none">
+          <option value="">Tous</option>
+          {jours.map((j) => <option value={j}>{j}</option>)}
+        </select>
+        <!-- Desktop : pills -->
+        <div class="hidden lg:flex flex-wrap gap-2">
+          <button data-filter="jour" data-value="" class="filter-btn rounded-full px-3.5 py-1 text-xs font-poppins border border-[#01DCF2] bg-[#01DCF2] text-white transition-all">Tous</button>
+          {jours.map((j) => (
+            <button data-filter="jour" data-value={j} class="filter-btn rounded-full px-3.5 py-1 text-xs font-poppins border border-[#01DCF2] text-[#01DCF2] bg-white hover:bg-[#01DCF2] hover:text-white transition-all">{j}</button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Filtre Scène — select mobile, pills desktop -->
+      <div class="flex flex-col gap-2">
+        <span class="font-poppins text-xs font-bold uppercase tracking-wide text-gray-500">Scène</span>
+        <!-- Mobile : select -->
+        <select data-select="scene" class="lg:hidden font-poppins text-sm border border-[#8223EE] rounded-full px-4 py-2 text-[#8223EE] bg-white focus:outline-none">
+          <option value="">Toutes</option>
+          {scenes.map((s) => <option value={s}>{s}</option>)}
+        </select>
+        <!-- Desktop : pills -->
+        <div class="hidden lg:flex flex-wrap gap-2">
+          <button data-filter="scene" data-value="" class="filter-btn rounded-full px-3.5 py-1 text-xs font-poppins border border-[#8223EE] bg-[#8223EE] text-white transition-all">Toutes</button>
+          {scenes.map((s) => (
+            <button data-filter="scene" data-value={s} class="filter-btn rounded-full px-3.5 py-1 text-xs font-poppins border border-[#8223EE] text-[#8223EE] bg-white hover:bg-[#8223EE] hover:text-white transition-all">{s}</button>
+          ))}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Grille d'artistes -->
+    <div id="artistes-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-12 px-6 mt-8 lg:max-w-6xl lg:mx-auto">
       {artistes.map((artiste: any) => {
         const sceneName = artiste.expand?.scene?.nom_scene ?? 'Scène inconnue';
         const photoUrl = `${pbUrl}/api/files/artiste/${artiste.id}/${artiste.photo_artiste}`;
+        const jour = formatDate(artiste.date_representation);
         return (
-          <div class="flex flex-col items-center text-center max-w-[380px] w-full">
+          <a
+            href={`/artiste/${slugify(artiste.nom_artiste)}`}
+            class="artiste-card flex flex-col items-center text-center max-w-[380px] w-full hover:opacity-80 transition-opacity"
+            data-genre={artiste.genre_musical ?? ''}
+            data-jour={jour}
+            data-scene={sceneName}
+          >
             <!-- Photo ronde -->
-            <div class="w-[200px] h-[200px] rounded-full overflow-hidden border border-[#058CD8] aspect-square">
+            <div class="w-[12.5rem] h-[12.5rem] rounded-full overflow-hidden border border-[#058CD8] aspect-square">
               <img
                 src={photoUrl}
                 alt={artiste.nom_artiste}
+                loading="lazy"
                 class="w-full h-full object-cover rounded-full"
               />
             </div>
@@ -45,30 +118,66 @@ function formatDate(dateStr: string): string {
 
             <!-- Bulles infos -->
             <div class="flex flex-wrap justify-center gap-2">
-              <!-- Date -->
-              <span class="rounded-full bg-[#01DCF2] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
-                {formatDate(artiste.date_representation)}
-              </span>
-              <!-- Heure -->
-              <span class="rounded-full bg-[#058CD8] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
-                {artiste.heure}
-              </span>
-              <!-- Genre musical -->
-              <span class="rounded-full bg-[#010BBF] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
-                {artiste.genre_musical}
-              </span>
-              <!-- Type artiste -->
-              <span class="rounded-full bg-[#010BBF] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
-                {artiste.type_artiste}
-              </span>
-              <!-- Scène (relation) -->
-              <span class="rounded-full bg-[#8223EE] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
-                {sceneName}
-              </span>
+              <span class="rounded-full bg-[#01DCF2] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">{jour}</span>
+              <span class="rounded-full bg-[#058CD8] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">{artiste.heure}</span>
+              <span class="rounded-full bg-[#010BBF] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">{artiste.genre_musical}</span>
+              <span class="rounded-full bg-[#010BBF] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">{artiste.type_artiste}</span>
+              <span class="rounded-full bg-[#8223EE] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">{sceneName}</span>
             </div>
-          </div>
+          </a>
         );
       })}
     </div>
+
+    <!-- Message aucun résultat -->
+    <p id="no-results" class="hidden text-center font-poppins text-gray-500 mt-10 px-4">Aucun artiste ne correspond à ces filtres.</p>
+
   </section>
+
+  <script>
+    const activeFilters: Record<string, string> = { genre: '', jour: '', scene: '' };
+
+    function applyFilters() {
+      const cards = document.querySelectorAll<HTMLElement>('.artiste-card');
+      let visible = 0;
+      cards.forEach((card) => {
+        const matchGenre = !activeFilters.genre || card.dataset.genre === activeFilters.genre;
+        const matchJour  = !activeFilters.jour  || card.dataset.jour  === activeFilters.jour;
+        const matchScene = !activeFilters.scene || card.dataset.scene === activeFilters.scene;
+        const show = matchGenre && matchJour && matchScene;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      const noResults = document.getElementById('no-results');
+      if (noResults) noResults.classList.toggle('hidden', visible > 0);
+    }
+
+    // Pills desktop
+    document.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter!;
+        const value = btn.dataset.value!;
+        const color = filter === 'genre' ? '#010BBF' : filter === 'jour' ? '#01DCF2' : '#8223EE';
+
+        document.querySelectorAll<HTMLButtonElement>(`.filter-btn[data-filter="${filter}"]`).forEach((b) => {
+          b.style.backgroundColor = 'white';
+          b.style.color = color;
+        });
+        btn.style.backgroundColor = color;
+        btn.style.color = 'white';
+
+        activeFilters[filter] = value;
+        applyFilters();
+      });
+    });
+
+    // Selects mobile
+    document.querySelectorAll<HTMLSelectElement>('select[data-select]').forEach((sel) => {
+      sel.addEventListener('change', () => {
+        const filter = sel.dataset.select!;
+        activeFilters[filter] = sel.value;
+        applyFilters();
+      });
+    });
+  </script>
 </Layout>

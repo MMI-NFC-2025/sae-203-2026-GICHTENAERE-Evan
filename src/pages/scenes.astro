@@ -5,27 +5,32 @@ import { allScenesSorted } from '../../backend/backend.mjs';
 
 const scenes = await allScenesSorted();
 const pbUrl = 'http://127.0.0.1:8090';
+
+function slugify(str: string): string {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
 ---
 
 <Layout>
     <Hero title="Les rives du territoire" subTitle="Scènes" />
 
-    <p class="font-[Poppins,sans-serif] px-[15px] mt-5">Les Rives du Territoire s'articule autour de quatre scènes disposées aux quatre points cardinaux des Berges de la Savoureuse : scène Nord, scène Sud, scène Est et scène Ouest. Chaque espace offre une ambiance différente tout en restant connecté à la rivière et à la promenade urbaine, pour faire du site un véritable tour d'horizon musical et artistique à ciel ouvert. Le public est invité à circuler librement entre les scènes pour composer son propre parcours, au rythme des concerts, des lumières et du paysage belfortain.​​</p>
+    <p class="font-poppins px-4 mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire s'articule autour de quatre scènes disposées aux quatre points cardinaux des Berges de la Savoureuse : scène Nord, scène Sud, scène Est et scène Ouest. Chaque espace offre une ambiance différente tout en restant connecté à la rivière et à la promenade urbaine, pour faire du site un véritable tour d'horizon musical et artistique à ciel ouvert. Le public est invité à circuler librement entre les scènes pour composer son propre parcours, au rythme des concerts, des lumières et du paysage belfortain.​​</p>
 
-    <section class="pb-12 px-[15px]">
-      <h2 class="font-inder text-2xl font-normal mt-5 mb-5">Scènes du festival</h2>
+    <section class="pb-12 px-4">
+      <h2 class="font-inder text-2xl font-normal mt-5 mb-5 lg:max-w-4xl lg:mx-auto">Scènes du festival</h2>
 
       <!-- Grille des scènes : 1 colonne mobile, 2 colonnes desktop -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-[1.25rem] max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 max-w-4xl mx-auto">
         {scenes.map((scene: any) => {
           const photoUrl = `${pbUrl}/api/files/scene/${scene.id}/${scene.photo}`;
           return (
-            <div class="flex flex-col items-center text-center">
+            <a href={`/scene/${slugify(scene.nom_scene)}`} class="flex flex-col items-center text-center hover:opacity-80 transition-opacity">
               <!-- Photo ronde -->
-              <div class="w-[200px] h-[200px] rounded-full overflow-hidden border border-[#058CD8] aspect-square">
+              <div class="w-[12.5rem] h-[12.5rem] rounded-full overflow-hidden border border-[#058CD8] aspect-square">
                 <img
                   src={photoUrl}
                   alt={scene.nom_scene}
+                  loading="lazy"
                   class="w-full h-full object-cover rounded-full"
                 />
               </div>
@@ -35,10 +40,9 @@ const pbUrl = 'http://127.0.0.1:8090';
 
               <!-- Description -->
               <p class="font-poppins text-sm leading-relaxed">{scene.description}</p>
-            </div>
+            </a>
           );
         })}
       </div>
     </section>
 </Layout>
-    <h1 class="text-4xl font-normal font-inder px-[15px]">Scènes du festival</h1>

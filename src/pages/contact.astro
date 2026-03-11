@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/hero.astro';
+import Button from '../components/button.astro';
+---
+
+<Layout>
+  <Hero title="Les rives du territoire" subTitle="Contact" />
+
+  <div class="px-[15px] mt-5 lg:max-w-2xl lg:mx-auto lg:w-full">
+
+    <h2 class="font-inder text-2xl font-normal mb-5">Formulaire de contact</h2>
+
+    <form>
+      <!-- Nom -->
+      <label class="font-poppins font-bold text-sm block mb-1">
+        Nom<span class="text-red-600">*</span>
+      </label>
+      <div class="flex gap-4 mb-1">
+        <div class="flex-1">
+          <input type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+          <span class="font-poppins text-xs text-gray-500">Prénom</span>
+        </div>
+        <div class="flex-1">
+          <input type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+          <span class="font-poppins text-xs text-gray-500">Nom</span>
+        </div>
+      </div>
+
+      <!-- E-mail -->
+      <label class="font-poppins font-bold text-sm block mt-4 mb-1">
+        E-mail<span class="text-red-600">*</span>
+      </label>
+      <input type="email" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+
+      <!-- Sujet -->
+      <label class="font-poppins font-bold text-sm block mt-4 mb-1">
+        Sujet<span class="text-red-600">*</span>
+      </label>
+      <input type="text" required class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm" />
+
+      <!-- Message -->
+      <label class="font-poppins font-bold text-sm block mt-4 mb-1">
+        Message<span class="text-red-600">*</span>
+      </label>
+      <textarea required rows="5" class="w-full border border-[#010BBF] rounded px-3 py-2 font-poppins text-sm resize-vertical"></textarea>
+
+      <!-- Bouton Envoyer -->
+      <div class="mt-5 flex justify-center">
+        <Button href="#" text="Envoyer" />
+      </div>
+    </form>
+
+    <!-- Coordonnées -->
+    <h2 class="font-inder text-2xl font-normal mt-8 mb-3">Coordonnées</h2>
+
+    <div class="font-poppins text-sm mb-10">
+      <p>Numéro de Téléphone : +33 X XX XX XX XX</p>
+      <p>Adresse mail :</p>
+      <p>nathan.batista_balanche@edu.univ-fcomte.fr</p>
+    </div>
+
+  </div>
+</Layout>
