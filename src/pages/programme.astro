@@ -5,7 +5,7 @@ import CardProg from '../components/cardprog.astro';
 import { allArtistesSortedByDateWithScene } from '../../backend/backend.mjs';
 import Button from '../components/button.astro';
 
-const pbUrl = 'http://127.0.0.1:8090';
+const pbUrl = 'https://sae203.lesrivesduterritoire.evangichtenaere.fr:443';
 const artistes = await allArtistesSortedByDateWithScene();
 
 function slugify(str: string): string {

@@ -22,7 +22,7 @@ if (!scene) {
   scene = allScenes.find((s: any) => slugify(s.nom_scene) === Astro.params.nom);
 }
 
-const pbUrl = 'http://127.0.0.1:8090';
+const pbUrl = 'https://sae203.lesrivesduterritoire.evangichtenaere.fr:443';
 const photoUrl = `${pbUrl}/api/files/scene/${scene.id}/${scene.photo}`;
 
 const artistes = await artistesBySceneId(scene.id);

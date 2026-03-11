@@ -21,7 +21,7 @@ if (!artiste) {
   const allArtistes = await allArtistesSortedByDateWithScene();
   artiste = allArtistes.find((a: any) => slugify(a.nom_artiste) === Astro.params.nom);
 }
-const pbUrl = 'http://127.0.0.1:8090';
+const pbUrl = 'https://sae203.lesrivesduterritoire.evangichtenaere.fr:443';
 const photoUrl = `${pbUrl}/api/files/artiste/${artiste.id}/${artiste.photo_artiste}`;
 const sceneName = artiste.expand?.scene?.nom_scene ?? 'Scène inconnue';
 

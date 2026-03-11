@@ -4,7 +4,7 @@ import { allArtistesSortedByDateWithScene } from '../../backend/backend.mjs';
 import Hero from '../components/hero.astro';
 
 const artistes = await allArtistesSortedByDateWithScene();
-const pbUrl = 'http://127.0.0.1:8090';
+const pbUrl = 'https://sae203.lesrivesduterritoire.evangichtenaere.fr:443';
 
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr);

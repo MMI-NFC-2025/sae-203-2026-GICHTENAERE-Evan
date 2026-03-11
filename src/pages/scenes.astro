@@ -4,7 +4,7 @@ import Hero from '../components/hero.astro';
 import { allScenesSorted } from '../../backend/backend.mjs';
 
 const scenes = await allScenesSorted();
-const pbUrl = 'http://127.0.0.1:8090';
+const pbUrl = 'https://sae203.lesrivesduterritoire.evangichtenaere.fr:443';
 
 function slugify(str: string): string {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
