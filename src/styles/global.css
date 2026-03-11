@@ -2,10 +2,12 @@
 @import '@fontsource/inder/400.css';
 @import '@fontsource/poppins/400.css';
 @import '@fontsource/poppins/700.css';
+@import '@fontsource/gorditas';
 
 @theme {
     --font-inder: 'Inder', sans-serif;
     --font-poppins: 'Poppins', sans-serif;
+    --font-gorditas: 'Gorditas', system-ui;
 }
 
 @layer base {
@@ -15,6 +17,7 @@
     @apply text-base leading-normal;
   }
   h1 {
+    font-family: var(--font-gorditas);
     @apply text-4xl font-normal leading-tight lg:text-6xl;
   }
   h2 {

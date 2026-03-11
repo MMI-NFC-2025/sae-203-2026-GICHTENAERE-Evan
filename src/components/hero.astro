@@ -6,13 +6,13 @@ const { title, subTitle } = Astro.props;
 ---
 
 <!-- Hero : photo complète visible, gradient par-dessus, textes au premier plan -->
-<section class="relative w-full mt-[72px]">
+<section class="relative w-full mt-[72px] lg:h-[420px] overflow-hidden">
 
   <!-- 1. Photo de fond — complète, non rognée -->
   <img
     src={imageHero.src}
     alt=""
-    class="w-full h-auto block"
+    class="w-full h-auto lg:h-full lg:object-cover block"
     aria-hidden="true"
   />
 
@@ -26,12 +26,12 @@ const { title, subTitle } = Astro.props;
 
   <!-- 3. Textes au premier plan -->
   <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white px-6">
-    <h1 class="text-[40px] font-bold leading-tight [-webkit-text-stroke:3px_black]">{title}</h1>
+    <h1 class="font-gorditas text-[40px] lg:text-[72px] font-bold leading-tight [-webkit-text-stroke:1px_black]">{title}</h1>
   </div>
 
   <!-- h2 positionné à 25px du bas du hero -->
   {subTitle && (
-    <h2 class="absolute bottom-[25px] left-0 right-0 z-10 text-center text-white font-sans text-sm font-light uppercase lg:text-lg">{subTitle}</h2>
+    <h2 class="absolute bottom-[25px] left-0 right-0 z-10 text-center text-white font-sans text-sm font-light uppercase lg:text-2xl">{subTitle}</h2>
   )}
 
 </section>

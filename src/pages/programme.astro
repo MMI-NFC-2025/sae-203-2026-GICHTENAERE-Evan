@@ -20,13 +20,13 @@ for (const artiste of artistes) {
 
 <Layout>
     <Hero title="Les rives du territoire" subTitle="Programme" />
-    <br />
-    <p class="font-[Poppins,sans-serif] px-[15px]">Les Rives du Territoire propose une programmation rythmée sur quatre jours intenses (20-23 décembre 2026), avec des concerts à horaires fixes pour une expérience fluide : ouverture à 17h, puis 18h30, 20h et clôture à 21h30. Ce format progressif permet un build-up naturel, mêlant hip-hop, électro et pop indé en plein air aux Berges de la Savoureuse. Consultez la grille jour par jour pour vibrer au rythme du territoire !</p>
+
+    <p class="font-[Poppins,sans-serif] px-[15px] mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire propose une programmation rythmée sur quatre jours intenses (20-23 décembre 2026), avec des concerts à horaires fixes pour une expérience fluide : ouverture à 17h, puis 18h30, 20h et clôture à 21h30. Ce format progressif permet un build-up naturel, mêlant hip-hop, électro et pop indé en plein air aux Berges de la Savoureuse. Consultez la grille jour par jour pour vibrer au rythme du territoire !</p>
 
     {Object.entries(grouped).map(([date, artistes]) => (
-      <section class="px-[15px] mt-8">
+      <section class="px-[15px] mt-8 lg:max-w-6xl lg:mx-auto">
         <h2 class="text-3xl font-normal font-inder mb-4 capitalize">{date}</h2>
-        <div class="flex flex-col gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {artistes.map((artiste: any) => (
             <CardProg
               nom={artiste.nom_artiste}
@@ -39,9 +39,8 @@ for (const artiste of artistes) {
         </div>
       </section>
     ))}
-    <div class="flex justify-center mt-8">
+    <div class="flex justify-center mt-8 mb-5">
       <Button href="/billeterie" text="Télécharger le programme en pdf" />
-      <br>
     </div>
 
 </Layout>

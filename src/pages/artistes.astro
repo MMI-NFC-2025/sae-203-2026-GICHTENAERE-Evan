@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { allArtistesSortedByDateWithScene } from '../../backend/backend.mjs';
+import Hero from '../components/hero.astro';
+
+const artistes = await allArtistesSortedByDateWithScene();
+const pbUrl = 'http://127.0.0.1:8090';
+
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  const day = date.getDate();
+  const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  return `${day} ${months[date.getMonth()]}`;
+}
+---
+
+<Layout>
+    <Hero title="Les rives du territoire" subTitle="Artistes" />
+    <p class="font-[Poppins,sans-serif] px-[15px] mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire est un festival de musiques actuelles et de culture urbaine qui met à l'honneur le hip‑hop, l'électro et la pop indépendante. Conçu comme un rendez‑vous hivernal en plein air, il valorise les talents émergents locaux tout en créant une véritable ambiance de quartier. Le festival propose une fusion entre concerts, street‑art et initiatives autour de l'écologie urbaine, transformant l'espace public en laboratoire créatif où se rencontrent musique, arts visuels et engagements citoyens.</p>
+
+  <section class="pb-12">
+    <h1 class="text-4xl font-normal font-inder px-[15px] mt-5 lg:max-w-4xl lg:mx-auto">Artistes présents</h1>
+
+    <!-- Grille d'artistes : 1 col mobile, 2 col md, 3 col lg -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 px-6 mt-5 lg:max-w-6xl lg:mx-auto">
+      {artistes.map((artiste: any) => {
+        const sceneName = artiste.expand?.scene?.nom_scene ?? 'Scène inconnue';
+        const photoUrl = `${pbUrl}/api/files/artiste/${artiste.id}/${artiste.photo_artiste}`;
+        return (
+          <div class="flex flex-col items-center text-center max-w-[380px] w-full">
+            <!-- Photo ronde -->
+            <div class="w-[200px] h-[200px] rounded-full overflow-hidden border border-[#058CD8] aspect-square">
+              <img
+                src={photoUrl}
+                alt={artiste.nom_artiste}
+                class="w-full h-full object-cover rounded-full"
+              />
+            </div>
+
+            <!-- Nom -->
+            <h3 class="font-inder text-xl font-bold mt-4 mb-2">{artiste.nom_artiste}</h3>
+
+            <!-- Description -->
+            <p class="font-poppins text-sm leading-relaxed mb-4">{artiste.description_artiste}</p>
+
+            <!-- Bulles infos -->
+            <div class="flex flex-wrap justify-center gap-2">
+              <!-- Date -->
+              <span class="rounded-full bg-[#01DCF2] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
+                {formatDate(artiste.date_representation)}
+              </span>
+              <!-- Heure -->
+              <span class="rounded-full bg-[#058CD8] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
+                {artiste.heure}
+              </span>
+              <!-- Genre musical -->
+              <span class="rounded-full bg-[#010BBF] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
+                {artiste.genre_musical}
+              </span>
+              <!-- Type artiste -->
+              <span class="rounded-full bg-[#010BBF] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
+                {artiste.type_artiste}
+              </span>
+              <!-- Scène (relation) -->
+              <span class="rounded-full bg-[#8223EE] px-3.5 py-1 text-xs font-poppins text-white" style="border: 0.75px solid black;">
+                {sceneName}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+</Layout>
