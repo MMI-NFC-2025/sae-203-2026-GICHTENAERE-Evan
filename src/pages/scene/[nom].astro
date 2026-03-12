@@ -28,7 +28,7 @@ const photoUrl = `${pbUrl}/api/files/scene/${scene.id}/${scene.photo}`;
 const artistes = await artistesBySceneId(scene.id);
 ---
 
-<Layout>
+<Layout title={scene.nom_scene} description={scene.description} image={photoUrl} type="article">
   <Hero title="Les rives du territoire" subTitle={scene.nom_scene} />
 
   <div class="px-4 mt-5 lg:max-w-4xl lg:mx-auto lg:w-full">

@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import Header from '../components/header.astro';
+import Footer from '../components/footer.astro';
+import SEO from '../components/SEO.astro';
+import imageHero from '../assets/image/image_hero.avif';
+import gradientHero from '../assets/image/gradient_hero.png';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEO title="Page introuvable" description="Cette page n'existe pas ou a été déplacée. Retournez à l'accueil du festival Les Rives du Territoire." />
+  </head>
+  <body class="bg-[#058CD8] min-h-screen flex flex-col">
+
+    <Header />
+
+    <main class="flex-1 flex flex-col">
+
+      <!-- Image héro avec gradient par-dessus -->
+      <div class="relative w-full mt-[72px] h-[45vh] lg:h-[55vh] overflow-hidden">
+        <img
+          src={imageHero.src}
+          alt=""
+          class="w-full h-full object-cover"
+          aria-hidden="true"
+        />
+        <img
+          src={gradientHero.src}
+          alt=""
+          class="absolute inset-0 w-full h-full object-cover"
+          aria-hidden="true"
+        />
+
+        <!-- Texte 404 superposé sur l'image -->
+        <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white px-6">
+          <p class="font-inder text-[5rem] lg:text-[9rem] leading-none font-bold drop-shadow-lg"
+             style="color: white;">
+            Page 404
+          </p>
+        </div>
+      </div>
+
+      <!-- Zone de contenu sous l'image -->
+      <div class="flex-1 bg-[#058CD8] flex flex-col items-center justify-center text-center px-6 py-6 lg:py-8">
+        <h1 class="font-gorditas text-white text-2xl lg:text-4xl leading-tight mb-3">
+          Page introuvable
+        </h1>
+        <p class="font-poppins text-white text-sm lg:text-base max-w-md mb-6 opacity-90">
+          Oops ! Cette page n'existe pas ou a été déplacée.<br />
+          Retourne à l'accueil pour continuer à explorer le festival.
+        </p>
+        <a
+          href="/"
+          class="inline-block bg-[#8223EE] text-white uppercase tracking-widest px-10 py-4 rounded-[15px] border-2 border-white font-inder text-sm"
+        >
+          Retour à l'accueil
+        </a>
+      </div>
+
+    </main>
+
+    <Footer />
+
+  </body>
+</html>

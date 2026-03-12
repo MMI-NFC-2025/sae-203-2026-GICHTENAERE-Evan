@@ -23,7 +23,7 @@ const jours = [...new Set(artistes.map((a: any) => formatDate(a.date_representat
 const scenes = [...new Set(artistes.map((a: any) => a.expand?.scene?.nom_scene).filter(Boolean))] as string[];
 ---
 
-<Layout>
+<Layout title="Artistes" description="Découvrez tous les artistes du festival Les Rives du Territoire : hip-hop, électro et pop indépendante. Filtrez par genre, jour et scène.">
     <Hero title="Les rives du territoire" subTitle="Artistes" />
     <p class="font-poppins px-4 mt-5 lg:max-w-4xl lg:mx-auto">Les Rives du Territoire est un festival de musiques actuelles et de culture urbaine qui met à l'honneur le hip‑hop, l'électro et la pop indépendante. Conçu comme un rendez‑vous hivernal en plein air, il valorise les talents émergents locaux tout en créant une véritable ambiance de quartier. Le festival propose une fusion entre concerts, street‑art et initiatives autour de l'écologie urbaine, transformant l'espace public en laboratoire créatif où se rencontrent musique, arts visuels et engagements citoyens.</p>
 

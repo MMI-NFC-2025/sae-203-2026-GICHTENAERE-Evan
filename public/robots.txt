@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lesrivesduterritoire.evangichtenaere.fr/sitemap-index.xml

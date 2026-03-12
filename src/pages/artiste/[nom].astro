@@ -32,7 +32,7 @@ const jourPassage = `${dateObj.getDate()} ${months[dateObj.getMonth()]}`;
 const galerieImages: string[] = artiste.galerie_artiste ?? [];
 ---
 
-<Layout>
+<Layout title={artiste.nom_artiste} description={artiste.description_artiste} image={photoUrl} type="article">
   <Hero title="Les rives du territoire" subTitle={artiste.nom_artiste} />
 
   <div class="px-4 mt-5 lg:max-w-4xl lg:mx-auto lg:w-full">

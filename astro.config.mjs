@@ -5,8 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 
 import netlify from '@astrojs/netlify';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://lesrivesduterritoire.evangichtenaere.fr',
   output: 'server',
 
   vite: {
@@ -16,4 +19,6 @@ export default defineConfig({
   adapter: netlify({
     imageCDN: false,
   }),
+
+  integrations: [sitemap()],
 });
